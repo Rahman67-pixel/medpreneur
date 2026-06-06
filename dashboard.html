@@ -1,43 +1,301 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Dashboard</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedPreneur Dashboard</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f0f0f;
+color:white;
+padding:20px;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px;
+background:#111;
+border-radius:12px;
+margin-bottom:20px;
+}
+
+.logo{
+font-size:1.5rem;
+font-weight:bold;
+color:#dc2626;
+}
+
+.dashboard{
+max-width:1200px;
+margin:auto;
+}
+
+.dashboard h1{
+margin-bottom:10px;
+}
+
+.dashboard-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+margin-top:25px;
+}
+
+.dashboard-card{
+background:#1a1a1a;
+padding:20px;
+border-radius:15px;
+border:1px solid rgba(220,38,38,.3);
+}
+
+.dashboard-card h2{
+margin-bottom:15px;
+color:#dc2626;
+}
+
+input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+margin-top:10px;
+}
+
+button{
+margin-top:15px;
+padding:12px 20px;
+background:#dc2626;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+button:hover{
+background:#b91c1c;
+}
+
+#totalHours{
+font-size:3rem;
+color:#dc2626;
+}
+
+#studyList{
+list-style:none;
+margin-top:10px;
+}
+
+#studyList li{
+padding:10px;
+border-bottom:1px solid #333;
+}
+
+.stat{
+font-size:2rem;
+font-weight:bold;
+color:#dc2626;
+}
+
+</style>
 </head>
+
 <body>
 
-<div class="auth-container">
+<nav>
+<div class="logo">➕ MedPreneur</div>
+<a href="index.html" style="color:white;text-decoration:none;">
+Home
+</a>
+</nav>
 
-    <h1>Welcome to MedPreneur</h1>
+<section class="dashboard">
 
-    <h3 id="welcome"></h3>
+<h1>
+Welcome,
+<span id="userName">
+Medical Student
+</span>
+</h1>
 
-    <p>Study Streak: 0 Days</p>
+<p>
+Track your academic journey and productivity.
+</p>
 
-    <p>Hours Studied Today: 0</p>
+<div class="dashboard-grid">
 
-    <p>Total Notes Uploaded: 0</p>
+<div class="dashboard-card">
+
+<h2>⏱ Study Tracker</h2>
+
+<input
+type="text"
+id="subject"
+placeholder="Subject (Anatomy, Physiology...)"
+>
+
+<input
+type="number"
+id="hours"
+placeholder="Hours Studied"
+>
+
+<button onclick="addStudySession()">
+Add Session
+</button>
 
 </div>
 
+<div class="dashboard-card">
+
+<h2>📊 Total Study Hours</h2>
+
+<div
+class="stat"
+id="totalHours"
+>
+0
+</div>
+
+</div>
+
+<div class="dashboard-card">
+
+<h2>📚 Study Records</h2>
+
+<ul id="studyList"></ul>
+
+</div>
+
+</div>
+
+</section>
+
 <script>
 
-const user = JSON.parse(
-    localStorage.getItem("medpreneurUser")
+const userName =
+document.getElementById("userName");
+
+userName.textContent =
+localStorage.getItem("fullName")
+|| "Medical Student";
+
+
+let studySessions =
+JSON.parse(
+localStorage.getItem("studySessions")
+)
+|| [];
+
+
+function addStudySession(){
+
+const subject =
+document.getElementById("subject").value;
+
+const hours =
+document.getElementById("hours").value;
+
+if(subject === "" || hours === ""){
+
+alert("Please fill all fields");
+
+return;
+
+}
+
+studySessions.push({
+
+subject:subject,
+
+hours:Number(hours)
+
+});
+
+localStorage.setItem(
+"studySessions",
+JSON.stringify(studySessions)
 );
 
-if(user){
-    document.getElementById("welcome")
-    .innerText = user.name;
+document.getElementById("subject").value = "";
+document.getElementById("hours").value = "";
+
+renderStudyData();
+
 }
+
+
+function renderStudyData(){
+
+const studyList =
+document.getElementById("studyList");
+
+const totalHours =
+document.getElementById("totalHours");
+
+studyList.innerHTML = "";
+
+let total = 0;
+
+studySessions.forEach((session,index)=>{
+
+total += session.hours;
+
+const li =
+document.createElement("li");
+
+li.innerHTML = `
+${session.subject}
+-
+${session.hours} hrs
+
+<button
+style="
+float:right;
+padding:5px 10px;
+margin-top:-5px;
+"
+onclick="deleteSession(${index})"
+>
+Delete
+</button>
+`;
+
+studyList.appendChild(li);
+
+});
+
+totalHours.textContent = total;
+
+}
+
+
+function deleteSession(index){
+
+studySessions.splice(index,1);
+
+localStorage.setItem(
+"studySessions",
+JSON.stringify(studySessions)
+);
+
+renderStudyData();
+
+}
+
+renderStudyData();
 
 </script>
 
 </body>
 </html>
-<h1>
-    Welcome,
-    <span id="userName">Student</span>
-</h1>
-
-<script src="script.js"></script>
