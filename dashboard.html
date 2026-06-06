@@ -365,3 +365,115 @@ Save Note
 <ul id="notesList"></ul>
 
 </div>
+let notes =
+JSON.parse(
+localStorage.getItem("notes")
+)
+|| [];
+
+
+function saveNote(){
+
+const title =
+document.getElementById("noteTitle").value;
+
+const course =
+document.getElementById("noteCourse").value;
+
+const content =
+document.getElementById("noteContent").value;
+
+if(
+title === "" ||
+course === "" ||
+content === ""
+){
+alert("Fill all fields");
+return;
+}
+
+notes.push({
+title,
+course,
+content
+});
+
+localStorage.setItem(
+"notes",
+JSON.stringify(notes)
+);
+
+document.getElementById("noteTitle").value = "";
+document.getElementById("noteCourse").value = "";
+document.getElementById("noteContent").value = "";
+
+renderNotes();
+
+}
+
+
+function renderNotes(){
+
+const notesList =
+document.getElementById("notesList");
+
+if(!notesList){
+return;
+}
+
+notesList.innerHTML = "";
+
+notes.forEach((note,index)=>{
+
+const li =
+document.createElement("li");
+
+li.innerHTML = `
+<b>${note.title}</b>
+<br>
+${note.course}
+<br><br>
+
+<button
+onclick="viewNote(${index})"
+>
+Open
+</button>
+
+<button
+onclick="deleteNote(${index})"
+>
+Delete
+</button>
+`;
+
+notesList.appendChild(li);
+
+});
+
+}
+
+
+function viewNote(index){
+
+alert(
+notes[index].content
+);
+
+}
+
+
+function deleteNote(index){
+
+notes.splice(index,1);
+
+localStorage.setItem(
+"notes",
+JSON.stringify(notes)
+);
+
+renderNotes();
+
+}
+
+renderNotes();
