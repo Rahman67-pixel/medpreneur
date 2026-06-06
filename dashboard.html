@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="auth-container">
+
+    <h1>Welcome to MedPreneur</h1>
+
+    <h3 id="welcome"></h3>
+
+    <p>Study Streak: 0 Days</p>
+
+    <p>Hours Studied Today: 0</p>
+
+    <p>Total Notes Uploaded: 0</p>
+
+</div>
+
+<script>
+
+const user = JSON.parse(
+    localStorage.getItem("medpreneurUser")
+);
+
+if(user){
+    document.getElementById("welcome")
+    .innerText = user.name;
+}
+
+</script>
+
+</body>
+</html>
