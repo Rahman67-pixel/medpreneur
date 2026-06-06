@@ -1,31 +1,22 @@
-document.addEventListener("DOMContentLoaded", () => {
+const signupForm = document.getElementById("signupForm");
 
-    const form = document.getElementById("signupForm");
+if (signupForm) {
+  signupForm.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-    if(form){
+    const fullName = document.getElementById("fullName").value;
+    const email = document.getElementById("email").value;
 
-        form.addEventListener("submit", (e) => {
+    localStorage.setItem("fullName", fullName);
+    localStorage.setItem("email", email);
 
-            e.preventDefault();
+    window.location.href = "dashboard.html";
+  });
+}
 
-            const user = {
-                name: document.getElementById("name").value,
-                email: document.getElementById("email").value,
-                university: document.getElementById("university").value,
-                password: document.getElementById("password").value
-            };
+const userName = document.getElementById("userName");
 
-            localStorage.setItem(
-                "medpreneurUser",
-                JSON.stringify(user)
-            );
-
-            alert("Account Created Successfully");
-
-            window.location.href = "dashboard.html";
-
-        });
-
-    }
-
-});
+if (userName) {
+  userName.textContent =
+    localStorage.getItem("fullName") || "Medical Student";
+}
