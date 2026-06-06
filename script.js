@@ -82,3 +82,58 @@ function renderStudyData(){
 }
 
 renderStudyData();
+// Daily Streak System
+
+let streak =
+localStorage.getItem("studyStreak") || 0;
+
+let lastStudyDate =
+localStorage.getItem("lastStudyDate");
+
+const today =
+new Date().toDateString();
+
+if(lastStudyDate !== today){
+
+if(lastStudyDate){
+
+const yesterday =
+new Date();
+
+yesterday.setDate(
+yesterday.getDate()-1
+);
+
+if(
+new Date(lastStudyDate)
+.toDateString()
+=== yesterday.toDateString()
+){
+streak++;
+}
+else{
+streak = 1;
+}
+
+}else{
+streak = 1;
+}
+
+localStorage.setItem(
+"studyStreak",
+streak
+);
+
+localStorage.setItem(
+"lastStudyDate",
+today
+);
+
+}
+
+const streakCount =
+document.getElementById("streakCount");
+
+if(streakCount){
+streakCount.textContent = streak;
+}
