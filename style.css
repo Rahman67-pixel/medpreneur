@@ -1,0 +1,48 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#0f172a;
+  color:white;
+}
+
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px;
+}
+
+nav button{
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+}
+
+.hero{
+  text-align:center;
+  padding:100px 20px;
+}
+
+.hero h1{
+  font-size:42px;
+  margin-bottom:20px;
+}
+
+.hero p{
+  max-width:600px;
+  margin:auto;
+  line-height:1.7;
+}
+
+.cta{
+  margin-top:30px;
+  padding:15px 30px;
+  border:none;
+  border-radius:10px;
+  font-size:18px;
+}
