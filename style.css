@@ -97,3 +97,17 @@ input{
     padding:10px;
     border-bottom:1px solid #333;
 }
+textarea{
+background:white;
+color:black;
+border:none;
+}
+
+#notesList{
+list-style:none;
+}
+
+#notesList li{
+padding:15px;
+border-bottom:1px solid #333;
+}
