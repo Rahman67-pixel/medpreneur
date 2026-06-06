@@ -79,3 +79,21 @@ nav{
     cursor:pointer;
     font-weight:bold;
 }
+input{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:none;
+    margin-top:5px;
+}
+
+#studyList{
+    list-style:none;
+    text-align:left;
+    margin-top:15px;
+}
+
+#studyList li{
+    padding:10px;
+    border-bottom:1px solid #333;
+}
